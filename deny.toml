@@ -1,0 +1,6 @@
+# cargo deny check licenses
+# Only permissive licences may enter the dependency tree, so that anyone can
+# ship the engine inside a closed product, on Steam and in app stores.
+[licenses]
+allow = ["MIT", "Apache-2.0", "Unicode-3.0", "Unlicense", "BSD-3-Clause", "Zlib"]
+confidence-threshold = 0.9

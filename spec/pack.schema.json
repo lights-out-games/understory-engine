@@ -1,0 +1,244 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Understory content pack (engine 0.1)",
+  "type": "object",
+  "required": [
+    "id",
+    "version",
+    "slots",
+    "terrains",
+    "weather",
+    "needs"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "stock_max": {
+      "type": "integer",
+      "minimum": 1,
+      "default": 3
+    },
+    "need_max": {
+      "type": "integer",
+      "minimum": 1,
+      "default": 2
+    },
+    "slots": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "terrains": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "max_biomass",
+          "water_capacity"
+        ],
+        "properties": {
+          "max_biomass": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "water_capacity": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "soil_adds_capacity": {
+            "type": "boolean",
+            "default": false
+          },
+          "grows": {
+            "type": "boolean",
+            "default": false
+          }
+        }
+      }
+    },
+    "weather": {
+      "type": "object",
+      "required": [
+        "pattern"
+      ],
+      "properties": {
+        "pattern": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "variance_sides": {
+          "type": "integer",
+          "minimum": 0,
+          "default": 0
+        },
+        "evaporation": {
+          "type": "integer",
+          "minimum": 0,
+          "default": 1
+        }
+      }
+    },
+    "needs": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "baseline": {
+            "type": "integer",
+            "minimum": 0,
+            "default": 0
+          }
+        }
+      }
+    },
+    "activities": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "slot"
+        ],
+        "properties": {
+          "slot": {
+            "type": "string"
+          },
+          "effects": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/effect"
+            }
+          }
+        }
+      }
+    },
+    "structures": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "terrains": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "effects": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/effect"
+            }
+          }
+        }
+      }
+    },
+    "species": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "requires"
+        ],
+        "properties": {
+          "requires": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "stock",
+                "min",
+                "patches"
+              ],
+              "properties": {
+                "stock": {
+                  "enum": [
+                    "soil",
+                    "water",
+                    "biomass"
+                  ]
+                },
+                "min": {
+                  "type": "integer"
+                },
+                "patches": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "terrain": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              }
+            }
+          },
+          "min_species": {
+            "type": "integer",
+            "minimum": 0,
+            "default": 0
+          },
+          "grace": {
+            "type": "integer",
+            "minimum": 0,
+            "default": 0
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "effect": {
+      "type": "object",
+      "required": [
+        "target",
+        "what",
+        "delta"
+      ],
+      "properties": {
+        "target": {
+          "type": "object",
+          "required": [
+            "kind"
+          ],
+          "properties": {
+            "kind": {
+              "enum": [
+                "own",
+                "home",
+                "nearest",
+                "around",
+                "neighbours"
+              ]
+            },
+            "terrain": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "radius": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "what": {
+          "type": "string"
+        },
+        "delta": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}

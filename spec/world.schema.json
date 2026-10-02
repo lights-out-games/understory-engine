@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Understory starting world (engine 0.1)",
+  "type": "object",
+  "required": [
+    "width",
+    "height",
+    "patches"
+  ],
+  "properties": {
+    "width": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "height": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "patches": {
+      "type": "array",
+      "description": "Row by row; width * height entries.",
+      "items": {
+        "type": "object",
+        "required": [
+          "terrain"
+        ],
+        "properties": {
+          "terrain": {
+            "type": "string"
+          },
+          "soil": {
+            "type": "integer",
+            "minimum": 0,
+            "default": 0
+          },
+          "water": {
+            "type": "integer",
+            "minimum": 0,
+            "default": 0
+          },
+          "biomass": {
+            "type": "integer",
+            "minimum": 0,
+            "default": 0
+          }
+        }
+      }
+    },
+    "agents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "x",
+          "y"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "x": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "y": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      }
+    }
+  }
+}

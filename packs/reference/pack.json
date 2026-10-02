@@ -1,0 +1,34 @@
+{
+  "id": "reference-garden",
+  "version": "0.1.0",
+  "stock_max": 3,
+  "need_max": 2,
+  "slots": ["work", "home", "commons"],
+  "terrains": {
+    "home":  { "max_biomass": 1, "water_capacity": 1 },
+    "paved": { "max_biomass": 0, "water_capacity": 0 },
+    "lot":   { "max_biomass": 3, "water_capacity": 1, "soil_adds_capacity": true, "grows": true },
+    "creek": { "max_biomass": 2, "water_capacity": 3, "grows": true }
+  },
+  "weather": { "pattern": [1, 0, 1, 2], "variance_sides": 6, "evaporation": 1 },
+  "needs": { "food": { "baseline": 1 }, "belonging": { "baseline": 0 } },
+  "activities": {
+    "balcony_garden": { "slot": "home", "effects": [
+      { "target": { "kind": "own" }, "what": "food", "delta": 1 },
+      { "target": { "kind": "home" }, "what": "biomass", "delta": 1 } ] },
+    "compost": { "slot": "home", "effects": [
+      { "target": { "kind": "nearest", "terrain": "lot", "radius": 2 }, "what": "soil", "delta": 1 } ] },
+    "shared_meal": { "slot": "commons", "effects": [
+      { "target": { "kind": "own" }, "what": "belonging", "delta": 1 },
+      { "target": { "kind": "neighbours", "radius": 1 }, "what": "belonging", "delta": 1 } ] }
+  },
+  "structures": {
+    "community_garden": { "terrains": ["lot"], "effects": [
+      { "target": { "kind": "neighbours", "radius": 2 }, "what": "food", "delta": 1 },
+      { "target": { "kind": "home" }, "what": "biomass", "delta": 1 } ] }
+  },
+  "species": {
+    "bee":  { "requires": [ { "stock": "biomass", "min": 1, "patches": 3 } ] },
+    "frog": { "requires": [ { "stock": "water", "min": 2, "patches": 1, "terrain": "creek" } ], "min_species": 1 }
+  }
+}
